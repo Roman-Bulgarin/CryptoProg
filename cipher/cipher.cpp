@@ -13,9 +13,9 @@ void encrypt(std::string keystr,const char * orig_file,const char * encr_file,co
     CryptoPP::SecByteBlock key(CryptoPP::AES::DEFAULT_KEYLENGTH);
     CryptoPP::PKCS12_PBKDF<CryptoPP::SHA256> pbkdf;
     pbkdf.DeriveKey(key,key.size(),0,reinterpret_cast<const CryptoPP::byte*>(keystr.data()),keystr.size(),nullptr,0,1000,0.0f);
-    CryptoPP::AutoSeededRandomPool prng;
+    CryptoPP::AutoSeededRandomPool prng; // Создание объекта для генерации случайных данных.
     CryptoPP::SecByteBlock iv(CryptoPP::AES::BLOCKSIZE);
-    prng.GenerateBlock(iv, iv.size());
+    prng.GenerateBlock(iv, iv.size()); // Генерация случайных данных для инициализационного вектора
     CryptoPP::StringSource(iv, iv.size(), true, new CryptoPP::HexEncoder(new CryptoPP::FileSink(iv_file)));                        
     std::clog << "IV generated and stored to file " << iv_file << std::endl;
     CryptoPP::CBC_Mode<CryptoPP::AES>::Encryption encr;
