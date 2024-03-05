@@ -11,8 +11,8 @@ void encrypt(std::string keystr,const char * orig_file,const char * encr_file,co
     try{
     CryptoPP::SHA256 hash;
     CryptoPP::SecByteBlock key(CryptoPP::AES::DEFAULT_KEYLENGTH);
-    CryptoPP::PKCS12_PBKDF<CryptoPP::SHA256> pbkdf;
-    pbkdf.DeriveKey(key,key.size(),0,reinterpret_cast<const CryptoPP::byte*>(keystr.data()),keystr.size(),nullptr,0,1000,0.0f);
+    CryptoPP::PKCS12_PBKDF<CryptoPP::SHA256> pbkdf; // Создание объекта для вывода ключа из пароля с использованием алгоритма PBKDF2 с хэшем SHA-256
+    pbkdf.DeriveKey(key,key.size(),0,reinterpret_cast<const CryptoPP::byte*>(keystr.data()),keystr.size(),nullptr,0,1000,0.0f); //вывод ключа из строки с использованием PBKDF2 и сохранение результата в массив key.
     CryptoPP::AutoSeededRandomPool prng; // Создание объекта для генерации случайных данных.
     CryptoPP::SecByteBlock iv(CryptoPP::AES::BLOCKSIZE);
     prng.GenerateBlock(iv, iv.size()); // Генерация случайных данных для инициализационного вектора
